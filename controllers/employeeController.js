@@ -47,7 +47,6 @@ function insertRecord(request, response) {
       console.log('Error occurred while saving Employee object to database');
     }
   });
-
 }
 
 function handleValidationError(error, body) {
@@ -60,9 +59,18 @@ function handleValidationError(error, body) {
         body['emailError'] = error.errors[field].message;
         break;
     }
-
   }
 }
 
+router.get('/:id', (request, response) => {
+  Employee.findById(request.params.id, (error, doc) => {
+    if (!error) {
+      response.render('employee/addOrEdit', {
+        viewTitle: 'Update Employee',
+        employee: JSON.parse(JSON.stringify(doc))
+      });
+    }
+  });
+});
 
 module.exports = router;

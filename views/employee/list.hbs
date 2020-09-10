@@ -1,3 +1,9 @@
+<h3>
+  <a href="/employee" class="btn btn-secondary">
+  <i class="fa fa-plus"></i>Create New
+  </a>
+  Employee List
+</h3>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -15,7 +21,7 @@
       <td>{{this.mobile}}</td>
       <td>{{{this.city}}}</td>
       <td>
-        <a href=""><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+        <a href="/employee/{{this._id}}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
         <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
       </td>
     </tr>
