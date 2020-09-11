@@ -24,7 +24,11 @@ router.get('/list', (request, response) => {
 });
 
 router.post('/', (request, response) => {
-  insertRecord(request, response);
+  if (!request.body._id) {
+    insertRecord(request, response);
+  } else {
+    updateRecord(request, response);
+  }
   // response.status(200).send('submitted form successfully');
 });
 
@@ -45,6 +49,25 @@ function insertRecord(request, response) {
         });
       }
       console.log('Error occurred while saving Employee object to database');
+    }
+  });
+}
+
+function updateRecord(request, response) {
+  console.log(`Request _id = ${request.body._id}`);
+  Employee.findOneAndUpdate({_id: request.body._id}, request.body, {new: true}, (error, doc) => {
+    if (!error) {
+      response.redirect('employee/list');
+    } else {
+      if (error.name == 'ValidationError') {
+        handleValidationError(error, request.body);
+        response.render('employee/addOrEdit', {
+          viewTitle: 'Update Employee',
+          employee: JSON.parse(JSON.stringify(request.body))
+        });
+      } else {
+        console.log('Error occurred while updating employee...');
+      }
     }
   });
 }
