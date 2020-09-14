@@ -96,4 +96,14 @@ router.get('/:id', (request, response) => {
   });
 });
 
+router.get('/delete/:id', (request, response) => {
+  Employee.findByIdAndDelete(request.params.id, (error, doc) =>{
+    if (!error) {
+      response.redirect('/employee/list');
+    } else {
+      console.log('Error occurred while deleting employee: ' + error);
+    }
+  });
+});
+
 module.exports = router;
